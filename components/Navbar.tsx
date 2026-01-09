@@ -14,7 +14,7 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-16">
           <div className="flex gap-3">
             <img src="/images/logos/logo.png" alt="PC Labels" className="w-12 h-12 rounded-xl" style={{ objectFit: 'contain' }} />
-            <Link href="/" className="text-3xl mt-2 font-display font-bold gradient-text">
+            <Link href="/" className="text-2xl mt-2 font-display font-bold gradient-text">
               PC Labels
             </Link>
           </div>
