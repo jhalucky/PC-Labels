@@ -29,18 +29,28 @@ export default function ContactSection() {
     setIsSubmitting(true);
     setSubmitStatus({ type: null, message: "" });
 
-    // Simulate form submission (replace with actual API call)
     try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      
-      // Here you would typically send the data to your backend
-      console.log("Form submitted:", formData);
-      
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.error || "Failed to submit form");
+      }
+
       setSubmitStatus({
         type: "success",
-        message: "Thank you! Your message has been sent successfully. We'll get back to you soon.",
+        message:
+          data.message ||
+          "Thank you! Your message has been sent successfully. We'll get back to you soon.",
       });
-      
+
       // Reset form
       setFormData({
         name: "",
@@ -49,6 +59,7 @@ export default function ContactSection() {
         message: "",
       });
     } catch (error) {
+      console.error("Error submitting contact form:", error);
       setSubmitStatus({
         type: "error",
         message: "Something went wrong. Please try again later.",
